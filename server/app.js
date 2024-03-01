@@ -9,7 +9,7 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors({ origin: ['http://localhost:4000'], credentials: true }))
+// app.use(cors({ origin: ['http://localhost:4000'], credentials: true }))
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
