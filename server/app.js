@@ -7,20 +7,23 @@ const eventRoutes = require('./routes/events');
 const authRoutes = require('./routes/auth');
 
 const app = express();
+app.use(cors({
+  origin: "*",
+}));
 
 app.use(bodyParser.json());
 // app.use(cors({ origin: ['http://localhost:4000'], credentials: true }))
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, PATCH, DELETE"
+//   );
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 
 app.use(authRoutes);
 app.use('/events', eventRoutes);
