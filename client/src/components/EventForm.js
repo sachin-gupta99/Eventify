@@ -10,6 +10,7 @@ import {
 import { getAuthToken } from "../util/auth";
 
 import classes from "./EventForm.module.css";
+import { host } from "../api/host";
 
 function EventForm({ method, event }) {
   const navigate = useNavigate();
@@ -101,7 +102,6 @@ function EventForm({ method, event }) {
 export default EventForm;
 
 export const action = async ({ request, params }) => {
-  // console.log('Hello');
   const data = await request.formData();
   const event = {
       title: data.get('title'),
@@ -110,16 +110,13 @@ export const action = async ({ request, params }) => {
       description: data.get('description'),
   };
 
-  let url = "http://localhost:8080/events/";
+  let url = `${host}/events/`;
 
   if(request.method === "PATCH") {
-    // console.log('Hello');
     url += params.eventId;
   }
 
   const token = getAuthToken();
-  // console.log(request.method);
-
   const res = await fetch(url, {
       method: request.method,
       headers: {

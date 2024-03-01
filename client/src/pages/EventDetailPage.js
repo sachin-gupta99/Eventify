@@ -10,6 +10,7 @@ import EventItem from "../components/EventItem";
 import EventsList from "../components/EventsList";
 import { fallback } from "../Layout/fallback";
 import { getAuthToken } from "../util/auth";
+import { host } from "../api/host";
 
 const EventDetailPage = () => {
   const { event, events } = useRouteLoaderData("event-detail");
@@ -33,7 +34,7 @@ const EventDetailPage = () => {
 export default EventDetailPage;
 
 const eventLoader = async (id) => {
-  const res = await fetch(`http://localhost:8080/events/${id}/`);
+  const res = await fetch(`${host}/events/${id}/`);
   if (!res.ok)
     throw json({ message: "Kuch to gadbad h" }, { status: res.status });
   const data = await res.json();
@@ -41,7 +42,7 @@ const eventLoader = async (id) => {
 };
 
 const eventsLoader = async () => {
-  const res = await fetch("http://localhost:8080/events/");
+  const res = await fetch(`${host}/events/`);
   if (!res.ok)
     throw json({ message: "Could not fetch data" }, { status: res.status });
   const data = await res.json();
@@ -61,7 +62,7 @@ export const action = async ({ params, request }) => {
 
   const token = getAuthToken();
 
-  const res = await fetch("http://localhost:8080/events/" + eventId, {
+  const res = await fetch(`${host}/events/` + eventId, {
     method: request.method,
     headers: {
       "Authorization": 'Bearer ' + token,

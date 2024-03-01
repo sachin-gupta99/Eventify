@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Await, defer, json, useLoaderData } from "react-router-dom";
 import EventsList from "../components/EventsList";
 import { fallback } from "../Layout/fallback";
+import { host } from "../api/host";
 
 const EventsPage = () => {
   const data = useLoaderData();
@@ -17,7 +18,7 @@ const EventsPage = () => {
 };
 
 const utilLoader = async () => {
-  const res = await fetch("http://localhost:8080/events/");
+  const res = await fetch(`${host}/events/`);
   if (!res.ok) {
     throw json({ message: "Could not fetch data" }, { status: res.status });
   }

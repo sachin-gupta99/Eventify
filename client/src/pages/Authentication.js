@@ -1,6 +1,7 @@
 import React from "react";
 import { json, redirect } from "react-router-dom";
 import AuthenticationForm from "../components/AuthenticationForm";
+import { host } from "../api/host";
 
 const Authentication = () => {
   return (
@@ -21,7 +22,7 @@ export const action = async ({ request, params }) => {
   const searchParams = new URL(request.url).searchParams;
   const mode = searchParams.get("mode") || "login";
 
-  const res = await fetch("http://localhost:8080/" + mode, {
+  const res = await fetch(host + "/" + mode, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

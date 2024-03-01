@@ -10,7 +10,6 @@ const ErrorPage = () => {
   let title;
   if(error.data)
     title = error.data.message;
-  // console.log(title);
   let message = "Something went wrong";
 
   if (!title) {
