@@ -1,0 +1,40 @@
+.event {
+  max-width: 50rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.event img {
+  width: 30rem;
+  border-radius: 4px;
+}
+
+.event p {
+  margin: 2%;
+  font-weight: normal;
+  color: var(--color-primary-800);
+  font-size: large;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.actions a,
+.actions button {
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  font: inherit;
+  font-size: large;
+  cursor: pointer;
+}
+
+.actions button {
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary-800);
+}
