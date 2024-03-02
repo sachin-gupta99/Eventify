@@ -31,9 +31,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.use(isAuth);
-
-router.post("/", async (req, res, next) => {
+router.post("/", isAuth, async (req, res, next) => {
   const data = req.body;
 
   let errors = {};
@@ -69,7 +67,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", isAuth, async (req, res, next) => {
   console.log("Edited");
   const data = req.body;
   console.log(data);
@@ -108,7 +106,7 @@ router.patch("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isAuth, async (req, res, next) => {
   try {
     await remove(req.params.id);
     res.json({ message: "Event deleted." });
