@@ -11,6 +11,8 @@ app.use(cors({
   origin: "*",
 }));
 
+app.options('*', cors())
+
 app.use(bodyParser.json());
 // app.use(cors({ origin: ['http://localhost:4000'], credentials: true }))
 
