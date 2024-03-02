@@ -8,7 +8,7 @@ const authRoutes = require('./routes/auth');
 
 const app = express();
 app.use(cors({
-  origin: "*",
+  origin: true
 }));
 
 app.options('*', cors())
