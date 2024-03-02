@@ -8,7 +8,7 @@ const authRoutes = require('./routes/auth');
 
 const app = express();
 app.use(cors({
-  origin: true
+  origin: "https://eventify-client-2rs1.onrender.com"
 }));
 
 app.options('*', cors())
