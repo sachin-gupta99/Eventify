@@ -11,7 +11,7 @@ app.use(cors({
   origin: "https://eventify-client-2rs1.onrender.com"
 }));
 
-app.options('*', cors())
+app.options('*', cors()) 
 
 app.use(bodyParser.json());
 // app.use(cors({ origin: ['http://localhost:4000'], credentials: true }))
