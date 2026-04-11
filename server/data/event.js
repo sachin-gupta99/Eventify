@@ -4,13 +4,23 @@ const { NotFoundError } = require("../util/errors");
 
 const { readData, writeData } = require("./util");
 
-async function getAll() {
+async function getAll(searchTerm) {
   const storedData = await readData();
  
   if (!storedData.events) {
     throw new NotFoundError("Could not find any events.");
   }
-  return storedData.events;
+
+  let events = storedData.events;
+
+  if (searchTerm && searchTerm.trim().length > 0) {
+    const lowerSearch = searchTerm.toLowerCase();
+    events = events.filter((event) =>
+      event.title.toLowerCase().includes(lowerSearch)
+    );
+  }
+
+  return events;
 }
 
 async function get(id) {
