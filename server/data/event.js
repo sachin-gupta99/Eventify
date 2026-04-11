@@ -1,16 +1,18 @@
-const fs = require("node:fs/promises");
 const { v4: generateId } = require("uuid");
 const { NotFoundError } = require("../util/errors");
-
 const { readData, writeData } = require("./util");
 
-async function getAll() {
+async function getAll(search) {
   const storedData = await readData();
- 
   if (!storedData.events) {
     throw new NotFoundError("Could not find any events.");
   }
-  return storedData.events;
+  let events = storedData.events;
+  if (search && search.trim() !== '') {
+    const term = search.toLowerCase();
+    events = events.filter(ev => ev.title.toLowerCase().includes(term));
+  }
+  return events;
 }
 
 async function get(id) {
@@ -18,12 +20,10 @@ async function get(id) {
   if (!storedData.events || storedData.events.length === 0) {
     throw new NotFoundError("Could not find any events.");
   }
-
   const event = storedData.events.find((ev) => ev.id === id);
   if (!event) {
     throw new NotFoundError("Could not find event for id " + id);
   }
-
   return event;
 }
 
@@ -38,14 +38,11 @@ async function replace(id, data) {
   if (!storedData.events || storedData.events.length === 0) {
     throw new NotFoundError("Could not find any events.");
   }
-
   const index = storedData.events.findIndex((ev) => ev.id === id);
   if (index < 0) {
     throw new NotFoundError("Could not find event for id " + id);
   }
-
   storedData.events[index] = { ...data, id };
-
   await writeData(storedData);
 }
 
