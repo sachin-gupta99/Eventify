@@ -1,5 +1,4 @@
 const express = require("express");
-
 const { getAll, get, add, replace, remove } = require("../data/event");
 const { isAuth } = require("../util/auth");
 const {
@@ -11,9 +10,9 @@ const {
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
-  
   try {
-    const events = await getAll();
+    const search = req.query.search || '';
+    const events = await getAll(search);
     setTimeout(() => {
       res.json({ events: events });
     }, 2000);
@@ -33,32 +32,17 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", isAuth, async (req, res, next) => {
   const data = req.body;
-
   let errors = {};
-
-  if (!isValidText(data.title)) {
-    errors.title = "Invalid title.";
-  }
-
-  if (!isValidText(data.description)) {
-    errors.description = "Invalid description.";
-  }
-
-  if (!isValidDate(data.date)) {
-    errors.date = "Invalid date.";
-  }
-
-  if (!isValidImageUrl(data.image)) {
-    errors.image = "Invalid image.";
-  }
-
+  if (!isValidText(data.title)) { errors.title = 'Invalid title.'; }
+  if (!isValidText(data.description)) { errors.description = 'Invalid description.'; }
+  if (!isValidDate(data.date)) { errors.date = 'Invalid date.'; }
+  if (!isValidImageUrl(data.image)) { errors.image = 'Invalid image.'; }
   if (Object.keys(errors).length > 0) {
     return res.status(422).json({
       message: "Adding the event failed due to validation errors.",
       errors,
     });
   }
-
   try {
     await add(data);
     res.status(201).json({ message: "Event saved.", event: data });
@@ -68,38 +52,20 @@ router.post("/", isAuth, async (req, res, next) => {
 });
 
 router.patch("/:id", isAuth, async (req, res, next) => {
-  console.log("Edited");
   const data = req.body;
-  console.log(data);
-
   let errors = {};
-
-  if (!isValidText(data.title)) {
-    errors.title = "Invalid title.";
-  }
-
-  if (!isValidText(data.description)) {
-    errors.description = "Invalid description.";
-  }
-
-  if (!isValidDate(data.date)) {
-    errors.date = "Invalid date.";
-  }
-
-  if (!isValidImageUrl(data.image)) {
-    errors.image = "Invalid image.";
-  }
-
+  if (!isValidText(data.title)) { errors.title = 'Invalid title.'; }
+  if (!isValidText(data.description)) { errors.description = 'Invalid description.'; }
+  if (!isValidDate(data.date)) { errors.date = 'Invalid date.'; }
+  if (!isValidImageUrl(data.image)) { errors.image = 'Invalid image.'; }
   if (Object.keys(errors).length > 0) {
     return res.status(422).json({
       message: "Updating the event failed due to validation errors.",
       errors,
     });
   }
-
   try {
     await replace(req.params.id, data);
-
     res.json({ message: "Event updated.", event: data });
   } catch (error) {
     next(error);
