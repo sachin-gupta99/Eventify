@@ -11,9 +11,10 @@ const {
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
-  
+  const search = req.query.search;
+
   try {
-    const events = await getAll();
+    const events = await getAll(search);
     setTimeout(() => {
       res.json({ events: events });
     }, 2000);
